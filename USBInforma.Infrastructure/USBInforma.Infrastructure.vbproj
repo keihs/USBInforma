@@ -84,6 +84,7 @@
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
+    <Import Include="System.Windows.Input" />
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>

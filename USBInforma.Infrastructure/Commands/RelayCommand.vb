@@ -1,5 +1,3 @@
-Imports System.Windows.Input
-
 Namespace Commands
 	Public Class RelayCommand
 		Implements ICommand

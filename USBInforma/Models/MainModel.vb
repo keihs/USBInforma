@@ -3,7 +3,7 @@ Imports System.IO
 
 Namespace Models
 	Public Class MainModel
-		ReadOnly _path2 As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "CIMV2" & "_Exception.log")
+		Private ReadOnly _path2 As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), Application.NAME & "_Exception.log")
 
 		Sub New()
 		End Sub
@@ -13,26 +13,8 @@ Namespace Models
 			Dim pnpDeviceIDList As New List(Of PnPEntity)
 			Try
 				Dim searcher As New ManagementObjectSearcher("root\CIMV2", "SELECT * FROM Win32_PnPEntity")
-				Dim queryObjs = From queryObj In searcher.Get() Where queryObj("Caption") Like "*:\" Select queryObj
+				Dim queryObjs = From queryObj In searcher.Get() Where queryObj("Caption") Like "*USB 大容量記憶装置*" Select queryObj
 				Dim serialNumber As String()
-
-				For Each queryObj In queryObjs
-					serialNumber = Split(queryObj("PNPDeviceID"), "\")
-					serialNumber = Split(serialNumber(UBound(serialNumber)), "&")
-					serialNumber = Split(serialNumber(UBound(serialNumber) - 1), "#")
-					pnpEntityList.Add(New PnPEntity() With {
-					.Caption = queryObj("Caption"),
-					.PNPDeviceID = queryObj("PNPDeviceID"),
-					.SerialNumber = serialNumber(UBound(serialNumber))
-					  })
-					Console.WriteLine("Caption: {0}", queryObj("Caption"))
-					Console.WriteLine("PNPDeviceID: {0}", queryObj("PNPDeviceID"))
-					Console.WriteLine("SerialNumber: {0}", serialNumber(UBound(serialNumber)))
-					Console.WriteLine()
-				Next
-
-				queryObjs = From queryObj In searcher.Get() Where queryObj("Caption") Like "*USB 大容量記憶装置*" Select queryObj
-				serialNumber = Nothing
 				Dim vendorID As String()
 				Dim productID As String()
 
@@ -47,10 +29,41 @@ Namespace Models
 					 .VendorID = vendorID(UBound(vendorID)),
 					 .ProductID = productID(UBound(productID))
 					   })
-					Console.WriteLine("VendorID: {0}", vendorID(UBound(vendorID)))
-					Console.WriteLine("ProductID: {0}", productID(UBound(productID)))
-					Console.WriteLine("SerialNumber: {0}", serialNumber(UBound(serialNumber)))
-					Console.WriteLine()
+					'Console.WriteLine("VendorID: {0}", vendorID(UBound(vendorID)))
+					'Console.WriteLine("ProductID: {0}", productID(UBound(productID)))
+					'Console.WriteLine("SerialNumber: {0}", serialNumber(UBound(serialNumber)))
+					'Console.WriteLine()
+				Next
+
+				queryObjs = From queryObj In searcher.Get() Where queryObj("Caption") Like "*:\" Select queryObj
+				'serialNumber = Nothing
+				Dim index As Integer
+				Dim vendor As String
+				Dim product As String
+
+				For Each queryObj In queryObjs
+					vendor = ""
+					product = ""
+					serialNumber = Split(queryObj("PNPDeviceID"), "\")
+					serialNumber = Split(serialNumber(UBound(serialNumber)), "&")
+					serialNumber = Split(serialNumber(UBound(serialNumber) - 1), "#")
+					index = pnpDeviceIDList.FindIndex(Function(x) serialNumber(UBound(serialNumber)) = x.SerialNumber)
+					If index > -1 Then
+						vendor = pnpDeviceIDList(index).VendorID
+						product = pnpDeviceIDList(index).ProductID
+					End If
+
+					pnpEntityList.Add(New PnPEntity() With {
+					.Caption = queryObj("Caption"),
+					.PNPDeviceID = queryObj("PNPDeviceID"),
+					.SerialNumber = serialNumber(UBound(serialNumber)),
+					.VendorID = vendor,
+					.ProductID = product
+					  })
+					'Console.WriteLine("Caption: {0}", queryObj("Caption"))
+					'Console.WriteLine("PNPDeviceID: {0}", queryObj("PNPDeviceID"))
+					'Console.WriteLine("SerialNumber: {0}", serialNumber(UBound(serialNumber)))
+					'Console.WriteLine()
 				Next
 
 

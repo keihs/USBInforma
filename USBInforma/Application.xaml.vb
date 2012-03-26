@@ -5,7 +5,7 @@ Class Application
 
 	' Startup、Exit、DispatcherUnhandledException などのアプリケーション レベルのイベントは、
 	' このファイルで処理できます。
-	Public Const VERSION As String = "0.1.0"
+	Public Const VERSION As String = "0.1"
 	Public Const NAME As String = "USBInforma"
 
 	Private Sub Application_Startup(sender As System.Object, e As System.Windows.StartupEventArgs)

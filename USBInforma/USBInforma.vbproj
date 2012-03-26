@@ -73,6 +73,14 @@
     <Compile Include="Models\MainModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
     <Compile Include="Models\PnPEntity.vb" />
+    <Page Include="Resources\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

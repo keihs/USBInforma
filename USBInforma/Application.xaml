@@ -5,7 +5,13 @@
 	Exit="Application_Exit"
 	SessionEnding="Application_SessionEnding"
 	DispatcherUnhandledException="Application_DispatcherUnhandledException">
+
 	<Application.Resources>
-		
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Resources\Common.xaml"/>
+				<ResourceDictionary Source="Resources\Template.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>

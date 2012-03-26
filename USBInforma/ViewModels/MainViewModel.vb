@@ -1,4 +1,5 @@
-﻿Imports USBInforma.Infrastructure.Commands
+﻿Imports System.Collections.ObjectModel
+Imports USBInforma.Infrastructure.Commands
 Imports USBInforma.Infrastructure.ViewModels
 Imports USBInforma.Models
 Imports USBInforma.Views
@@ -29,6 +30,17 @@ Namespace ViewModels
 
 #Region " プロパティ "
 
+		Public Property PnPEntityList() As ObservableCollection(Of PnPEntity)
+			Get
+				Return _PnPEntityList
+			End Get
+			Set(ByVal value As ObservableCollection(Of PnPEntity))
+				_PnPEntityList = value
+				OnPropertyChanged("PnPEntityList")
+			End Set
+		End Property
+		Private _PnPEntityList As New ObservableCollection(Of PnPEntity)
+
 #Region " コマンドプロパティ "
 		''' <summary>
 		''' 画面ロード時
@@ -48,7 +60,8 @@ Namespace ViewModels
 
 #Region " メソッド "
 		Private Sub ExecuteLoaded()
-			_mainmodel.GetPnPEntity()
+			PnPEntityList = New ObservableCollection(Of PnPEntity)(_mainmodel.GetPnPEntity())
+			'OnPropertyChanged("PnPEntityList")
 		End Sub
 #End Region
 

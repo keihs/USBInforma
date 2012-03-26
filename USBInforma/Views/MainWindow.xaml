@@ -2,9 +2,15 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:compMod="clr-namespace:System.ComponentModel;assembly=WindowsBase"
 	Title="USBInforma" Height="350" Width="525"
 	DataContext="{Binding}" FontFamily="メイリオ" FontSize="13" WindowStartupLocation="CenterScreen" >
 	<Window.Resources>
+		<CollectionViewSource x:Key="PnPEntityListSource" Source="{Binding PnPEntityList}">
+			<CollectionViewSource.SortDescriptions>
+				<compMod:SortDescription PropertyName="Caption" Direction="Ascending"/>
+			</CollectionViewSource.SortDescriptions>
+		</CollectionViewSource>
 	</Window.Resources>
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
@@ -12,7 +18,21 @@
 		</i:EventTrigger>
 	</i:Interaction.Triggers>
 
-	<Grid>
-
-	</Grid>
+	<DockPanel>
+		<ListBox x:Name="PnPEntityListBox" DockPanel.Dock="Top" IsSynchronizedWithCurrentItem="True" AlternationCount="2"
+			VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+			ItemsSource="{Binding Source={StaticResource PnPEntityListSource}}"
+			Style="{DynamicResource ListBoxStyle}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" ItemTemplate="{DynamicResource ListBoxPnPEntityTemplate}"
+			HorizontalContentAlignment="Stretch">
+		</ListBox>
+		<StackPanel DataContext="{Binding ElementName=PnPEntityListBox, Path=Items}" DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+			<Label Content="VenderID:" />
+			<TextBox Width="50" Text="{Binding VendorID}" IsReadOnly="True" />
+			<Label Content="ProductID:" />
+			<TextBox Width="50" Text="{Binding ProductID}" IsReadOnly="True" />
+			<Label Content="SerialNumber:" />
+			<TextBox Width="145" Text="{Binding SerialNumber}" IsReadOnly="True" />
+		</StackPanel>
+		<Button DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Copy" />
+	</DockPanel>
 </Window>

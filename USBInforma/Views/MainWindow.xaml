@@ -3,7 +3,7 @@
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:compMod="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-	Title="USBInforma" Height="350" Width="525"
+	Title="USBInforma" Height="350" Width="525" MinHeight="185"
 	DataContext="{Binding}" FontFamily="メイリオ" FontSize="13" WindowStartupLocation="CenterScreen" >
 	<Window.Resources>
 		<CollectionViewSource x:Key="PnPEntityListSource" Source="{Binding PnPEntityList}">
@@ -18,14 +18,29 @@
 		</i:EventTrigger>
 	</i:Interaction.Triggers>
 
-	<DockPanel>
-		<ListBox x:Name="PnPEntityListBox" DockPanel.Dock="Top" IsSynchronizedWithCurrentItem="True" AlternationCount="2"
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ListBox x:Name="PnPEntityListBox" Grid.Row="0" IsSynchronizedWithCurrentItem="True" AlternationCount="2"
 			VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
 			ItemsSource="{Binding Source={StaticResource PnPEntityListSource}}"
+			SelectedIndex="{Binding SelectedPnPEntityListIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+			SelectedItem="{Binding SelectedPnPEntityListItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 			Style="{DynamicResource ListBoxStyle}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}" ItemTemplate="{DynamicResource ListBoxPnPEntityTemplate}"
 			HorizontalContentAlignment="Stretch">
 		</ListBox>
-		<StackPanel DataContext="{Binding ElementName=PnPEntityListBox, Path=Items}" DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+		<!--<StackPanel x:Name="PnPEntityPanel" DataContext="{Binding ElementName=PnPEntityListBox, Path=Items}" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+			<Label Content="VenderID:" />
+			<TextBox Width="50" Text="{Binding VendorID}" IsReadOnly="True" />
+			<Label Content="ProductID:" />
+			<TextBox Width="50" Text="{Binding ProductID}" IsReadOnly="True" />
+			<Label Content="SerialNumber:" />
+			<TextBox Width="145" Text="{Binding SerialNumber}" IsReadOnly="True" />
+		</StackPanel>-->
+		<StackPanel x:Name="PnPEntityPanel" DataContext="{Binding SelectedPnPEntityListItem}" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 			<Label Content="VenderID:" />
 			<TextBox Width="50" Text="{Binding VendorID}" IsReadOnly="True" />
 			<Label Content="ProductID:" />
@@ -33,6 +48,8 @@
 			<Label Content="SerialNumber:" />
 			<TextBox Width="145" Text="{Binding SerialNumber}" IsReadOnly="True" />
 		</StackPanel>
-		<Button DockPanel.Dock="Top" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Copy" />
-	</DockPanel>
+		<Button Grid.Row="2" Style="{DynamicResource ButtonStyle}"
+				Command="{Binding CopyCommand}" CommandParameter="{Binding SelectedPnPEntityListItem}"
+				HorizontalAlignment="Right" VerticalAlignment="Top" Content="Copy" />
+	</Grid>
 </Window>

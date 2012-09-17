@@ -1,5 +1,6 @@
 ﻿Imports System.Management
 Imports System.IO
+Imports USBInforma.Infrastructure.Utils
 
 Namespace Models
 	Public Class MainModel

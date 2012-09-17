@@ -1,4 +1,5 @@
-﻿Imports USBInforma.ViewModels
+﻿Imports USBInforma.Infrastructure.Utils
+Imports USBInforma.ViewModels
 Imports USBInforma.Views
 
 Class Application
@@ -9,6 +10,7 @@ Class Application
 	Public Const NAME As String = "USBInforma"
 
 	Private Sub Application_Startup(sender As System.Object, e As System.Windows.StartupEventArgs)
+		UIDispatcherHelper.UIDispatcher = Me.Dispatcher
 		Dim mainView = New MainWindow()
 		Dim mainWindowViewModel = New MainViewModel(mainView)
 		mainView.DataContext = mainWindowViewModel

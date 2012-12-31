@@ -1,4 +1,21 @@
-﻿Imports System.Collections.ObjectModel
+﻿''====================================================================
+''====================================================================
+''====================================================================
+''!
+''! @file MainViewModel.vb
+''! @brief $description: $
+''! @author KeiH
+''! @date   2012/03/19
+''! @version $Revision: $
+''! @overview 
+''!
+''! Copyright (C) 2012 KeiH.  All rights reserved.
+''!
+''====================================================================
+''====================================================================
+''====================================================================
+
+Imports System.Collections.ObjectModel
 Imports System.Reactive.Linq
 Imports System.Threading.Tasks
 Imports USBInforma.Infrastructure.Commands

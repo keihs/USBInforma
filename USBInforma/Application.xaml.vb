@@ -1,4 +1,21 @@
-﻿Imports USBInforma.Infrastructure.Utils
+﻿''====================================================================
+''====================================================================
+''====================================================================
+''!
+''! @file Application.xaml.vb
+''! @brief $description: $
+''! @author KeiH
+''! @date   2012/03/19
+''! @version $Revision: $
+''! @overview 
+''!
+''! Copyright (C) 2012 KeiH.  All rights reserved.
+''!
+''====================================================================
+''====================================================================
+''====================================================================
+
+Imports USBInforma.Infrastructure.Utils
 Imports USBInforma.ViewModels
 Imports USBInforma.Views
 
